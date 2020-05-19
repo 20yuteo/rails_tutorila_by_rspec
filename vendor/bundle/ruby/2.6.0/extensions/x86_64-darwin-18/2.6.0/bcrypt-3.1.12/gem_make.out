@@ -1,0 +1,19 @@
+current directory: /Users/arakakitatsuki/Desktop/env/rspec_app/vendor/bundle/ruby/2.6.0/gems/bcrypt-3.1.12/ext/mri
+/Users/arakakitatsuki/.rbenv/versions/2.6.1/bin/ruby -I /Users/arakakitatsuki/.rbenv/versions/2.6.1/lib/ruby/site_ruby/2.6.0 -r ./siteconf20200519-56559-y14ms0.rb extconf.rb
+creating Makefile
+
+current directory: /Users/arakakitatsuki/Desktop/env/rspec_app/vendor/bundle/ruby/2.6.0/gems/bcrypt-3.1.12/ext/mri
+make "DESTDIR=" clean
+
+current directory: /Users/arakakitatsuki/Desktop/env/rspec_app/vendor/bundle/ruby/2.6.0/gems/bcrypt-3.1.12/ext/mri
+make "DESTDIR="
+compiling bcrypt_ext.c
+compiling crypt.c
+compiling crypt_blowfish.c
+compiling crypt_gensalt.c
+compiling wrapper.c
+linking shared-object bcrypt_ext.bundle
+
+current directory: /Users/arakakitatsuki/Desktop/env/rspec_app/vendor/bundle/ruby/2.6.0/gems/bcrypt-3.1.12/ext/mri
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 bcrypt_ext.bundle ./.gem.20200519-56559-1s60fua
