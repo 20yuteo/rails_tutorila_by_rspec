@@ -7,28 +7,38 @@ RSpec.describe "StaticPages", type: :request do
             expect(response).to have_http_status 200
         end
         it "has title 'Ruby on Rails Tutorial Sample App'" do
-            expect(response.body).to include 'Ruby on Rails Tutorial Sample App'
+            expect(response.body).to include full_title('')
             expect(response.body).to_not include '| Ruby on Rails Tutorial Sample App'
         end
     end
 
     context 'GET #help' do
-        before { get static_pages_help_url }
+        before { get help_path }
         it 'responds successfully' do
             expect(response).to have_http_status 200
         end
         it "has title 'Home | Ruby on Rails Tutorial Sample App'" do
-            expect(response.body).to include 'Help | Ruby on Rails Tutorial Sample App'
+            expect(response.body).to include full_title('Help')
         end
     end
 
     context 'GET #about' do
-        before { get static_pages_about_url }
+        before { get about_path }
         it 'responds succesfully' do
             expect(response).to have_http_status 200
         end
         it "has title 'Home | Ruby on Rails Tutorial Sample App'" do
-            expect(response.body).to include 'About | Ruby on Rails Tutorial Sample App'
+            expect(response.body).to include full_title('About')
+        end
+    end
+
+    context 'GET #contact' do
+        before { get contact_path }
+        it 'responds succesfully' do
+            expect(response).to have_http_status 200
+        end
+        it "has title 'Contact | Ruby on Rails Tutorial Sample App'" do
+            expect(response.body).to include full_title('Contact')
         end
     end
 end
