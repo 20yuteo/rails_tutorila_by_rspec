@@ -23,6 +23,9 @@ RSpec.describe "Users", type: :request do
         subject { response }
         it { is_expected.to redirect_to user_path(User.last) }
         it { is_expected.to have_http_status 302 }
+        it 'Log in' do
+          expect(is_logged_in?).to be_truthy
+        end
     end
   end
 
