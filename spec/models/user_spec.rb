@@ -1,7 +1,9 @@
 require 'rails_helper'
 require 'shoulda-matchers'
+# require './user.rb'
 
 RSpec.describe User, type: :model do
+  let(:user) { FactoryBot.create(:user) }
 
   #facrory botが存在するかのテストです
   it 'has a valid factory bot' do
@@ -59,5 +61,12 @@ RSpec.describe User, type: :model do
       end
     end
     it { is_expected.to validate_length_of(:password).is_at_least(6) }
+  end
+
+  describe "authenticated? should return false for a user with nil digest" do
+    # ダイジェストが存在しない場合のauthenticated?のテスト
+    it "is invalid without remember_digest" do
+      expect(user.authenticated?(:remember)).to eq false
+    end
   end
 end

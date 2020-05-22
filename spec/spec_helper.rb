@@ -17,6 +17,7 @@ require './app/helpers/application_helper'
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
+  # config.include LoginSupport
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
@@ -96,6 +97,7 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+
 config.include FactoryBot::Syntax::Methods
 config.before(:each, type: :system) do
   driven_by :selenium_chrome_headless
