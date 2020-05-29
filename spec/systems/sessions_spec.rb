@@ -4,7 +4,7 @@ RSpec.describe 'Sessions', type: :system do
     end
   
     describe 'enter an valid values' do
-      let!(:user) { create(:user, email: 'loginuser@example.com', password: 'password') }
+      let!(:user) { create(:user, email: 'loginuser@example.com', password: 'password', activated: true, activated_at: Time.zone.now) }
       before do
         fill_in 'Email', with: 'loginuser@example.com'
         fill_in 'Password', with: 'password'

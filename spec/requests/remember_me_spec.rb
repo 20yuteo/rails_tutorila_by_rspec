@@ -2,7 +2,7 @@ require 'rails_helper'
 require './spec/support/utilities.rb'
 
 RSpec.describe "Remember me", type: :request do
-    let(:user) { FactoryBot.create(:user) }
+    let(:user) { FactoryBot.create(:user, activated: true, activated_at: Time.zone.now) }
 
     context "with vaild information" do
         it "logs in with valid informaiton" do

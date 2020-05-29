@@ -1,10 +1,11 @@
 require 'rails_helper'
+require 'rails-controller-testing'
 
 RSpec.describe "Users", type: :request do
-  let(:user) { FactoryBot.create(:user) }
+  let(:user) { FactoryBot.create(:user, activated: true, activated_at: Time.zone.now) }
   # admin_user = build(:admin_user)
-  let(:admin_user) { FactoryBot.create(:user, admin: true) }
-  let(:other_user) { FactoryBot.create(:user) }
+  let(:admin_user) { FactoryBot.create(:user, admin: true, activated: true, activated_at: true) }
+  let(:other_user) { FactoryBot.create(:user, activated: true, activated_at: Time.zone.now) }
 
   describe "GET /new" do
     it "returns http success" do
@@ -25,10 +26,10 @@ RSpec.describe "Users", type: :request do
     context 'add a user' do
         before { post signup_path, params: { user: attributes_for(:user) } }
         subject { response }
-        it { is_expected.to redirect_to user_path(User.last) }
+        it { is_expected.to redirect_to root_path }
         it { is_expected.to have_http_status 302 }
         it 'Log in' do
-          expect(is_logged_in?).to be_truthy
+          expect(is_logged_in?).to be_falsy
         end
     end
   end
@@ -151,6 +152,50 @@ end
     it "redirects to the sign-in page" do
       delete user_path(user), params: { id: user.id }
       expect(response).to redirect_to login_path
+    end
+  end
+
+  describe "#create" do
+  include ActiveJob::TestHelper
+
+    it "is invalid with invalid sign up information" do
+      perform_enqueued_jobs do
+        expect {
+          post users_path, params: { user: { name: "",
+                                            email: "user@invalid",
+                                            password: "foo",
+                                            password_confirmation: "bar" }}
+      }.to_not change(User, :count)
+      end
+    end
+
+    it "is invalid with valid sign up information" do
+      perform_enqueued_jobs do
+        expect {
+          post users_path, params: { user: { name: "ExampleUser",
+                                             email: "user@example.com",
+                                             password: "password",
+                                             password_confirmation: "password" } }
+      }.to change(User, :count).by(1)
+
+      expect(response).to redirect_to root_path
+      user = assigns(:user)
+
+      sign_in_as(user)
+      expect(session[:user_id]).to be_falsy
+
+      get edit_account_activation_path("invalid token", email: user.email)
+      expect(session[:user_id]).to be_falsy
+
+      get edit_account_activation_path(user.activation_token, email: "wrong")
+      expect(session[:user_id]).to be_falsy
+
+      get edit_account_activation_path(user.activation_token, email: user.email)
+      expect(session[:user_id]).to eq user.id
+      expect(user.name).to eq "ExampleUser"
+      expect(user.email).to eq "user@example.com"
+      expect(user.password).to eq "password"
+      end
     end
   end
 end

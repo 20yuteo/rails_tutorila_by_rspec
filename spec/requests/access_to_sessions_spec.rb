@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'access to sessions', type: :request do
-  let!(:user) { create(:user) }
+  let!(:user) { create(:user, activated: true, activated_at: Time.zone.now) }
   describe 'POST #create' do
     it 'log in and redirect to detail page' do
       post login_path, params: { session: { email: user.email,

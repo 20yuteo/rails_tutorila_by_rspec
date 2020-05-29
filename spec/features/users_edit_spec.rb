@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature "Edit", type: :feature do
-    let(:user) { FactoryBot.create(:user) }
+    let(:user) { FactoryBot.create(:user, activated: true, activated_at: Time.zone.now) }
 
     scenario "successful edit" do
         visit user_path(user)
