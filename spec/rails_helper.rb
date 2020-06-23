@@ -33,6 +33,12 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 RSpec.configure do |config|
 
+  [:controller, :view, :request].each do |type|
+    config.include Rails::Controller::Testing::TestProcess
+    config.include Rails::Controller::Testing::TemplateAssertions
+    config.include Rails::Controller::Testing::Integration
+  end
+
   # config.include LoginSupport
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures

@@ -2,7 +2,7 @@ RSpec.describe 'Sessions', type: :system do
     before do
       visit login_path
     end
-  
+
     describe 'enter an valid values' do
       let!(:user) { create(:user, email: 'loginuser@example.com', password: 'password', activated: true, activated_at: Time.zone.now) }
       before do
@@ -30,7 +30,7 @@ RSpec.describe 'Sessions', type: :system do
         is_expected.to_not have_link nil, href: user_path(user)
       end
     end
-  
+
   #ここから下は以前書いた分-------------------------------------------------------------
     describe 'enter an invalid values' do
       before do

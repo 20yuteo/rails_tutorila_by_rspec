@@ -5,7 +5,7 @@ RSpec.describe "Users", type: :request do
   let(:user) { FactoryBot.create(:user, activated: true, activated_at: Time.zone.now) }
   # admin_user = build(:admin_user)
   let(:admin_user) { FactoryBot.create(:user, admin: true, activated: true, activated_at: true) }
-  let(:other_user) { FactoryBot.create(:user, activated: true, activated_at: Time.zone.now) }
+  let(:other_user) { FactoryBot.create(:user, activated_at: Time.zone.now) }
 
   describe "GET /new" do
     it "returns http success" do
@@ -135,14 +135,12 @@ end
     end
 
     context "as an unauthorized user" do
+      before { sign_in_as other_user }
       it "redirects to the dashbord" do
-        sign_in_as other_user
         delete user_path(user), params: { id: user.id }
         expect(response).to redirect_to root_path
       end
-    end
 
-    context "as a guest" do
       it "returns a 302 response" do
         delete user_path(user), params: { id: user.id }
         expect(response).to have_http_status "302"

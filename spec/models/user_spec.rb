@@ -3,8 +3,7 @@ require 'shoulda-matchers'
 # require './user.rb'
 
 RSpec.describe User, type: :model do
-  let(:user) { FactoryBot.create(:user) }
-
+  let(:user) { FactoryBot.create(:user, activated: true) }
   #facrory botが存在するかのテストです
   it 'has a valid factory bot' do
     expect(build(:user)).to be_valid
@@ -68,6 +67,13 @@ RSpec.describe User, type: :model do
     it "is invalid without remember_digest" do
       remember_token = User.new_token
       expect(user.authenticated?(:remember, remember_token)).to eq false
+    end
+  end
+
+  describe "User's test with micropost" do
+    it "is associated microposts should be destroyed" do
+      micropost = create(:micropost, user_id: user.id)
+      expect{user.destroy}.to change(Micropost, :count).by (-1)
     end
   end
 end
