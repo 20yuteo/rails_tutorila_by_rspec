@@ -3,12 +3,17 @@ require 'rails_helper'
 RSpec.describe 'microposts layouts', type: :system do
 
     let!(:user) { FactoryBot.create(:user, activated: true, activated_at: Time.zone.now) }
+    let!(:other_user) { FactoryBot.create(:user, name: 'other_user', activated: true, activated_at: Time.zone.now) }
     let!(:micropost) { FactoryBot.create(:micropost, user_id: user.id) }
-    let(:other_user) { FactoryBot.create(:user, name: 'other user', activated: true, activated_at: Time.zone.now) }
 
-    before { log_in_as(user) }
+    # before { log_in_as(user) }
     context 'layouts test' do
         it 'is invalid requests' do
+            visit root_path
+            # click_link 'Log in'
+            # fill_in 'Email', with: user.email
+            # fill_in 'Password', with: user.password
+            # click_button 'Log in'
             click_link 'Home'
             fill_in 'micropost_content', with: ''
             click_button 'Post'
@@ -16,6 +21,11 @@ RSpec.describe 'microposts layouts', type: :system do
         end
 
         it 'is valid requests' do
+            visit root_path
+            click_link 'Log in'
+            fill_in 'Email', with: user.email
+            fill_in 'Password', with: user.password
+            click_button 'Log in'
             click_link 'Home'
             fill_in 'micropost_content', with: 'This micropost really ties the room together'
             click_button 'Post'
@@ -26,6 +36,11 @@ RSpec.describe 'microposts layouts', type: :system do
 
         it 'is valid delete' do
             page.accept_confirm do
+                visit root_path
+                click_link 'Log in'
+                fill_in 'Email', with: user.email
+                fill_in 'Password', with: user.password
+                click_button 'Log in'
                 click_link 'delete'
             end
             # microposts = user.microposts.count.to_s
@@ -33,12 +48,22 @@ RSpec.describe 'microposts layouts', type: :system do
         end
 
         it 'is invalid delete' do
+            visit root_path
+            click_link 'Log in'
+            fill_in 'Email', with: user.email
+            fill_in 'Password', with: user.password
+            click_button 'Log in'
             click_link 'Users'
             click_link other_user.name
             expect(page).to_not have_content 'delete'
         end
 
         it 'is invalid request include a picture' do
+            visit root_path
+            click_link 'Log in'
+            fill_in 'Email', with: user.email
+            fill_in 'Password', with: user.password
+            click_button 'Log in'
             click_link 'Home'
             # expect(page).to have_selector 'div.pagination'
             expect(page).to have_selector 'input[type=file]'

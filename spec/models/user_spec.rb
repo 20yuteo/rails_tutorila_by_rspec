@@ -4,6 +4,7 @@ require 'shoulda-matchers'
 
 RSpec.describe User, type: :model do
   let(:user) { FactoryBot.create(:user, activated: true) }
+  let(:other_user) { FactoryBot.create(:user, name: 'other user', activated: true, activated_at: Time.zone.now) }
   #facrory botが存在するかのテストです
   it 'has a valid factory bot' do
     expect(build(:user)).to be_valid
@@ -74,6 +75,21 @@ RSpec.describe User, type: :model do
     it "is associated microposts should be destroyed" do
       micropost = create(:micropost, user_id: user.id)
       expect{user.destroy}.to change(Micropost, :count).by (-1)
+    end
+  end
+
+  describe 'relationship test' do
+    it 'is following behavire' do
+      var = user.following?(other_user)
+      expect(var).to be_in([false])
+      user.follow(other_user)
+      var = user.following?(other_user)
+      expect(var).to be_in([true])
+      var = other_user.followers.include?(user)
+      expect(var).to be_in([true])
+      user.unfollow(other_user)
+      var = user.following?(other_user)
+      expect(var).to be_in([false])
     end
   end
 end

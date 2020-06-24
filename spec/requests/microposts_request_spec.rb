@@ -4,7 +4,7 @@ require 'rails-controller-testing'
 RSpec.describe "Microposts", type: :request do
     let(:user) { FactoryBot.create(:user, activated: true, activated_at: Time.zone.now)}
     let(:other_user) { FactoryBot.create(:user, activated: true, activated_at: Time.zone.now) }
-    let(:micropost) { FactoryBot.create(:orange, user_id: user.id, created_at: Time.zone.now) }
+    let(:micropost) { FactoryBot.create(:orange, user_id: user.id) }
 
     context "when not logged in" do
 

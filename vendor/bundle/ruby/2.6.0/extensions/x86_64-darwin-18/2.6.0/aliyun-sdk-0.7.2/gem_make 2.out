@@ -1,0 +1,16 @@
+current directory: /Users/arakakitatsuki/Desktop/env/rspec_app/vendor/bundle/ruby/2.6.0/gems/aliyun-sdk-0.7.2/ext/crcx
+/Users/arakakitatsuki/.rbenv/versions/2.6.1/bin/ruby -I /Users/arakakitatsuki/.rbenv/versions/2.6.1/lib/ruby/2.6.0 -r ./siteconf20200623-15734-ron19z.rb extconf.rb
+creating Makefile
+
+current directory: /Users/arakakitatsuki/Desktop/env/rspec_app/vendor/bundle/ruby/2.6.0/gems/aliyun-sdk-0.7.2/ext/crcx
+make "DESTDIR=" clean
+
+current directory: /Users/arakakitatsuki/Desktop/env/rspec_app/vendor/bundle/ruby/2.6.0/gems/aliyun-sdk-0.7.2/ext/crcx
+make "DESTDIR="
+compiling crc64_ecma.c
+compiling crcx.c
+linking shared-object aliyun/crcx.bundle
+
+current directory: /Users/arakakitatsuki/Desktop/env/rspec_app/vendor/bundle/ruby/2.6.0/gems/aliyun-sdk-0.7.2/ext/crcx
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 crcx.bundle ./.gem.20200623-15734-1p560ii/aliyun

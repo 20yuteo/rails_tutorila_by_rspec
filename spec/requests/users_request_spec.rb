@@ -197,4 +197,17 @@ end
     end
   end
 end
+
+    describe 'redirect behavire' do
+      it 'is not logged in at following' do
+        get following_user_path(user)
+        expect(response).to redirect_to login_url
+      end
+
+      it 'is not logged in at followed' do
+        get followers_user_path(user)
+        expect(response).to redirect_to login_url
+      end
+
+    end
 end
